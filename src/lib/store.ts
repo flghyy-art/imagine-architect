@@ -29,6 +29,13 @@ export type LogItem = {
   createdAt: number;
 };
 
+export type SequencePhase = {
+  key: string;
+  title: string;
+  prompt: string;
+  imageUrl?: string;
+};
+
 export type StudioState = {
   styleId: string;
   boosterIds: string[];
@@ -39,6 +46,7 @@ export type StudioState = {
   aspectRatio: AspectRatio;
   subject: string;
   sequenceBase: string;
+  sequencePhases: SequencePhase[];
   messages: ChatMessage[];
   gallery: GalleryItem[];
   logs: LogItem[];
@@ -52,6 +60,8 @@ export type StudioState = {
   setSubject: (v: string) => void;
   insertBlock: (text: string) => void;
   setSequenceBase: (v: string) => void;
+  setSequencePhases: (sequencePhases: SequencePhase[]) => void;
+  patchSequencePhase: (key: string, patch: Partial<SequencePhase>) => void;
   loadTemplate: (t: Template) => void;
   addMessage: (msg: ChatMessage) => void;
   patchMessage: (id: string, patch: Partial<ChatMessage>) => void;
@@ -74,6 +84,7 @@ export const useStudio = create<StudioState>()(
       aspectRatio: "16:9",
       subject: "",
       sequenceBase: "",
+      sequencePhases: [],
       messages: [
         {
           id: "welcome",
@@ -102,6 +113,13 @@ export const useStudio = create<StudioState>()(
           subject: s.subject ? `${s.subject.trim()} ${text}` : text,
         })),
       setSequenceBase: (sequenceBase) => set({ sequenceBase }),
+      setSequencePhases: (sequencePhases) => set({ sequencePhases }),
+      patchSequencePhase: (key, patch) =>
+        set((s) => ({
+          sequencePhases: s.sequencePhases.map((p) =>
+            p.key === key ? { ...p, ...patch } : p,
+          ),
+        })),
       loadTemplate: (t) =>
         set({
           styleId: t.styleId,
@@ -157,6 +175,7 @@ export const useStudio = create<StudioState>()(
         aspectRatio: s.aspectRatio,
         subject: s.subject,
         sequenceBase: s.sequenceBase,
+        sequencePhases: s.sequencePhases,
         messages: s.messages.slice(-40),
         gallery: s.gallery,
         logs: s.logs,

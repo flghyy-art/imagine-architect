@@ -55,25 +55,25 @@ export function StudioApp() {
         </section>
 
         <Tabs value={tab} onValueChange={setTab} className="flex min-h-0 flex-col">
-          <TabsList className="mb-6 w-full justify-start sm:w-auto">
+          <TabsList className="mb-6">
             <TabsTrigger value="dialog">
-              <MessageSquare className="size-3.5" />
+              <MessageSquare className="size-3.5 max-sm:hidden" />
               对话
             </TabsTrigger>
             <TabsTrigger value="builder">
-              <Sparkles className="size-3.5" />
+              <Sparkles className="size-3.5 max-sm:hidden" />
               组装
             </TabsTrigger>
             <TabsTrigger value="sequence">
-              <Clapperboard className="size-3.5" />
+              <Clapperboard className="size-3.5 max-sm:hidden" />
               分镜
             </TabsTrigger>
             <TabsTrigger value="templates">
-              <LayoutTemplate className="size-3.5" />
+              <LayoutTemplate className="size-3.5 max-sm:hidden" />
               模板
             </TabsTrigger>
             <TabsTrigger value="gallery">
-              <BookOpen className="size-3.5" />
+              <BookOpen className="size-3.5 max-sm:hidden" />
               图库
             </TabsTrigger>
           </TabsList>

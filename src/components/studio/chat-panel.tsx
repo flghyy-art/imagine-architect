@@ -188,6 +188,7 @@ export function ChatPanel() {
           placeholder="描述画面，例如：雨夜里穿风衣的侦探走进霓虹巷子，跟踪镜头"
           className="min-h-[72px] resize-none bg-card"
           onKeyDown={(e) => {
+            if (e.nativeEvent.isComposing || e.keyCode === 229) return;
             if (e.key === "Enter" && !e.shiftKey) {
               e.preventDefault();
               void send();
